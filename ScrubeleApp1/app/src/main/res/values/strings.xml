@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Scrubele</string>
+    <color name="pink">#F64160</color>
+    <string name="app_name_">TextInputLayout</string>
+    <string name="username">Enter Username</string>
+    <string name="password">Enter Password</string>
+
+    <string name="name">Enter Username</string>
+    <string name="phone">Enter Password</string>
+    <string name="submit">Submit</string>
+</resources>
