@@ -10,6 +10,15 @@
     tools:context=".MainActivity">
 
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSignIn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Sign In"
+        android:textSize="15dp" />
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
@@ -75,6 +84,8 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textSize="20dp"/>
+
+
 
 
 </LinearLayout>
