@@ -79,8 +79,8 @@ class EntryActivity : AppCompatActivity() {
             if (field.text.toString().isEmpty()) {
                 field.error = getString(R.string.requiredField)
             } else {
-                field.error = getString(R.string.incorrectField)
                 field.text?.clear()
+                field.error = getString(R.string.incorrectField)
             }
             field.highlightColor = Color.RED
         }
@@ -88,11 +88,11 @@ class EntryActivity : AppCompatActivity() {
     }
 
     private fun showInputErrors() {
-        Toast.makeText(this, getString(R.string.emailIsUsed), Toast.LENGTH_LONG).show()
-        emailTxt.error = getString(R.string.emailIsUsed)
-        passwordTxt.error = getString(R.string.emailIsUsed)
         emailTxt.text?.clear()
         passwordTxt.text?.clear()
+        emailTxt.error = getString(R.string.incorrectInput)
+        passwordTxt.error = getString(R.string.incorrectInput)
+        Toast.makeText(this, getString(R.string.incorrectInput), Toast.LENGTH_LONG).show()
     }
 
     private fun addUserToDB(uid: String, email: String, name: String, phone: String) {
