@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:noHistory="true"></activity>
-        <activity android:name=".SignUpActivity" android:allowTaskReparenting="true" android:noHistory="true" ></activity>
-        <activity android:name=".WelcomeActivity" android:allowTaskReparenting="true" android:noHistory="true" ></activity>
+        <activity android:name=".MainActivity" android:noHistory="true"/>
+        <activity android:name=".EntryActivity" android:allowTaskReparenting="true" android:noHistory="true" />
+        <activity android:name=".WelcomeActivity" android:allowTaskReparenting="true" android:noHistory="true" />
     </application>
 
 </manifest>

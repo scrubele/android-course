@@ -4,36 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#F5F5F5"
+    android:background="@color/colorLight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:backgroundTint="@color/colorLight">
-
-
+    tools:context=".MainActivity">
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/back1" />
+        app:srcCompat="@drawable/back1"
+        android:contentDescription="@string/image" />
 
     <TextView
         android:id="@+id/welcomeTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=""
         android:gravity="center"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_marginBottom="60dp"/>
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignOut"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Out"
-        android:textSize="20dp"/>
-
-
+        android:text="@string/sign_out"
+        android:textSize="20sp"/>
 </LinearLayout>

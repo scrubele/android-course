@@ -2,20 +2,21 @@
     <string name="app_name">Scrubele</string>
     <color name="pink">#F64160</color>
     <string name="app_name_">TextInputLayout</string>
-    <string name="username">Enter Username</string>
-    <string name="password">Enter Password</string>
-
-    <string name="name">Enter Username</string>
-    <string name="phone">Enter Password</string>
-    <string name="submit">Submit</string>
+    <string name="enterUsername">Enter Username</string>
+    <string name="enterPassword">Enter Password</string>
     <string name="emailIsUsed">Email is already used</string>
     <string name="requiredField">Field is required</string>
     <string name="incorrectField">Field is incorrect</string>
-
     <string name="fillUpCredentials">Fill up the credentials</string>
     <string name="successfulSignIn">Successfully signed in :)</string>
-
-    <string name="errorSignIn">Error signed in :)</string>
     <string name="successfulSignUp">Successfully registered :)</string>
-
+    <string name="errorSignIn">Error signed in :(</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="your_name">Your name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="image">image</string>
 </resources>

@@ -4,26 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#F5F5F5"
+    android:background="@color/colorLight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:backgroundTint="@color/colorLight">
-
-
+    tools:context=".MainActivity">
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/back1" />
+        app:srcCompat="@drawable/back1"
+        android:contentDescription="@string/image" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20sp"
-        android:hint="Email">
+        android:hint="@string/email">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailTxt"
             android:layout_width="match_parent"
             android:inputType="textEmailAddress"
@@ -34,39 +32,29 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password">
+        android:hint="@string/password">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTxt"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20sp"
-        android:hint="Your name"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Phone number"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignIn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
-        android:textSize="20dp"/>
+        android:text="@string/sign_in"
+        android:textSize="20sp"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignUp"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:textSize="20dp"/>
-
-
+        android:text="@string/sign_up"
+        android:textSize="20sp"/>
 </LinearLayout>

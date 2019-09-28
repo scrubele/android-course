@@ -8,30 +8,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignIn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:text="Sign In"
-        android:textSize="15dp" />
+        android:gravity="start"
+        android:text="@string/sign_in"
+        android:textSize="15sp" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="216dp"
-        app:srcCompat="@drawable/back1" />
+        app:srcCompat="@drawable/back1"
+        android:contentDescription="@string/image" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20sp"
-        android:hint="Email">
+        android:hint="@string/email">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailTxt"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
@@ -42,22 +41,23 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password">
+        android:hint="@string/password">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTxt"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20sp"
-        android:hint="Your name">
+        android:hint="@string/your_name">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameTxt"
             android:inputType="textPersonName"
             android:layout_width="match_parent"
@@ -68,24 +68,21 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Phone number">
+        android:hint="@string/phone_number">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneTxt"
             android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignUp"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:textSize="20dp"/>
-
-
-
-
+        android:text="@string/sign_up"
+        android:textSize="20sp"/>
 </LinearLayout>

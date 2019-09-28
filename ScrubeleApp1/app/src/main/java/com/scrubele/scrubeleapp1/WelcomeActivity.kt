@@ -2,7 +2,7 @@ package com.scrubele.scrubeleapp1
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 
 class WelcomeActivity : AppCompatActivity() {
 
-    var user = FirebaseAuth.getInstance().currentUser
-    var db = FirebaseFirestore.getInstance()
+    private var user = FirebaseAuth.getInstance().currentUser
+    private var collectionReference = FirebaseFirestore.getInstance().collection("users")
 
     public override fun onStart() {
         super.onStart()
@@ -20,29 +20,22 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-
         showWelcome()
         btnSignOut.setOnClickListener { launchSignInActivity() }
     }
 
     private fun showWelcome() {
-        val userData = db.collection("users").document(user!!.uid)
-
+        val userData = collectionReference.document(user!!.uid)
         userData.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val welcome = "Welcome, " + document.get("name")
                     welcomeTxt.text = welcome
-
-                    Log.d("user", "DocumentSnapshot data: ${document.data}")
-                } else {
-                    Log.d("user", "No such document")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("user", "get failed with ", exception)
+                Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
             }
-
     }
 
     private fun launchSignInActivity() {
@@ -52,8 +45,6 @@ class WelcomeActivity : AppCompatActivity() {
             Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_NEW_TASK and
                     Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
         )
-
         startActivity(intent)
-//        finish()
     }
 }
