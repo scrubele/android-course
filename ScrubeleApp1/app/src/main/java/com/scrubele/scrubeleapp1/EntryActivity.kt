@@ -9,13 +9,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_entry.*
+
 
 class EntryActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
+
+    private companion object {
+        const val PASSWORD_PATTERN = ".{8,}"
+        const val PHONE_PATTERN = "^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +36,26 @@ class EntryActivity : AppCompatActivity() {
         val password = passwordTxt.text.toString()
         val name = nameTxt.text.toString()
         val phone = phoneTxt.text.toString()
-        val isDataValid = mapOf(
-            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
-            "passwordTxt" to (password.isNotEmpty() && password.matches(".{8,}".run { toRegex() })),
-            "phoneTxt" to (phone.isNotEmpty() && phone.matches("^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}".run { toRegex() })),
-            "nameTxt" to (name.isNotEmpty())
-        ).filter { !it.value }
-        if (isDataValid.isEmpty()) {
+        val invalidData = findInvalidData(email, password, name, phone)
+        if (invalidData.isEmpty()) {
             createUser(email, password, name, phone)
         } else {
-            showDataErrors(isDataValid)
+            showDataErrors(invalidData)
         }
+    }
+
+    private fun findInvalidData(
+        email: String,
+        password: String,
+        name: String,
+        phone: String
+    ): Map<String, Boolean> {
+        return mapOf(
+            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
+            "passwordTxt" to (password.isNotEmpty() && password.matches(PASSWORD_PATTERN.run { toRegex() })),
+            "phoneTxt" to (phone.isNotEmpty() && phone.matches(PHONE_PATTERN.run { toRegex() })),
+            "nameTxt" to (name.isNotEmpty())
+        ).filter { !it.value }
     }
 
     private fun createUser(email: String, password: String, name: String, phone: String) {
@@ -47,32 +63,35 @@ class EntryActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     addUserToDB(auth.currentUser!!.uid, email, name, phone)
-                    signInUser(email, password)
+                    authenticateUser(name)
                 } else {
+                    Toast.makeText(this, getString(R.string.errorSignUp), Toast.LENGTH_SHORT)
+                        .show()
                     showInputErrors()
                 }
             }
     }
 
-    private fun signInUser(email: String, password: String) {
-        this.auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(
-                this
-            ) { task ->
+    private fun authenticateUser(name: String) {
+        val user = auth.currentUser
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName(name).build()
+        user!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, getString(R.string.successfulSignIn), Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(
+                        this, getString(R.string.successfulSignUp)+","+user.displayName,
+                        Toast.LENGTH_LONG
+                    ).show()
                     launchWelcomeActivity()
-                } else {
-                    Toast.makeText(this, getString(R.string.errorSignIn), Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
+
     }
 
     private fun showDataErrors(isDataValid: Map<String, Boolean>) {
         val res = resources
-        for ((titleText:String) in isDataValid) {
+        for ((titleText: String) in isDataValid) {
             val field = findViewById<TextInputLayout>(
                 res.getIdentifier(titleText, "id", packageName)
             ) as EditText

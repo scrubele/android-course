@@ -14,6 +14,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var auth = FirebaseAuth.getInstance()
+    private companion object {
+        const val PASSWORD_PATTERN=".{8,}"
+    }
 
     public override fun onStart() {
         super.onStart()
@@ -29,15 +32,19 @@ class MainActivity : AppCompatActivity() {
     private fun signInUser() {
         val email = emailTxt.text.toString()
         val password = passwordTxt.text.toString()
-        val isDataValid = mapOf(
-            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
-            "passwordTxt" to (password.isNotEmpty() && password.matches(".{8,}".run { toRegex() }))
-        ).filter { !it.value }
-        if (isDataValid.isEmpty()) {
+        val invalidData = findInvalidData(email, password)
+        if (invalidData.isEmpty()) {
             authenticateUser(email, password)
         } else {
-            showDataErrors(isDataValid)
+            showDataErrors(invalidData)
         }
+    }
+
+    private fun findInvalidData(email: String, password: String):Map<String, Boolean>{
+        return mapOf(
+            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
+            "passwordTxt" to (password.isNotEmpty() && password.matches(PASSWORD_PATTERN.run { toRegex() }))
+        ).filter { !it.value }
     }
 
     private fun authenticateUser(email: String, password: String) {

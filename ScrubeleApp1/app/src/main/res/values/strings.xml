@@ -12,6 +12,7 @@
     <string name="successfulSignIn">Successfully signed in :)</string>
     <string name="successfulSignUp">Successfully registered :)</string>
     <string name="errorSignIn">Error signed in :(</string>
+    <string name="errorSignUp">Error signed up :(</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_out">Sign Out</string>

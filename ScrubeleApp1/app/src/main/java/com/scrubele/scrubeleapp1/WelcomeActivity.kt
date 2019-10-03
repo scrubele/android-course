@@ -10,8 +10,7 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 
 class WelcomeActivity : AppCompatActivity() {
 
-    private var user = FirebaseAuth.getInstance().currentUser
-    private var collectionReference = FirebaseFirestore.getInstance().collection("users")
+    private var user = FirebaseAuth.getInstance().currentUser!!
 
     public override fun onStart() {
         super.onStart()
@@ -25,17 +24,8 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun showWelcome() {
-        val userData = collectionReference.document(user!!.uid)
-        userData.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val welcome = "Welcome, " + document.get("name")
-                    welcomeTxt.text = welcome
-                }
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
-            }
+        val welcome = "Welcome, " + user.displayName
+        welcomeTxt.text = welcome
     }
 
     private fun launchSignInActivity() {
