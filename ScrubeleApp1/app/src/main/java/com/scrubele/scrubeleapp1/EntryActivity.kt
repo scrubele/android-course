@@ -7,8 +7,11 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_entry.*
@@ -16,13 +19,13 @@ import kotlinx.android.synthetic.main.activity_entry.*
 
 class EntryActivity : AppCompatActivity() {
 
-    private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
-
     private companion object {
         const val PASSWORD_PATTERN = ".{8,}"
         const val PHONE_PATTERN = "^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}"
     }
+
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,15 +64,17 @@ class EntryActivity : AppCompatActivity() {
     private fun createUser(email: String, password: String, name: String, phone: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    addUserToDB(auth.currentUser!!.uid, email, name, phone)
-                    authenticateUser(name)
-                } else {
-                    Toast.makeText(this, getString(R.string.errorSignUp), Toast.LENGTH_SHORT)
-                        .show()
-                    showInputErrors()
-                }
+                handleUserCreating(task, email, name, phone)
             }
+    }
+
+    private fun handleUserCreating(task : Task<AuthResult>, email: String, name: String, phone: String){
+        if (task.isSuccessful) {
+            addUserToDB(auth.currentUser!!.uid, email, name, phone)
+            authenticateUser(name)
+        } else {
+            showInputErrors()
+        }
     }
 
     private fun authenticateUser(name: String) {
@@ -78,15 +83,18 @@ class EntryActivity : AppCompatActivity() {
             .setDisplayName(name).build()
         user!!.updateProfile(profileUpdates)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        this, getString(R.string.successfulSignUp)+","+user.displayName,
-                        Toast.LENGTH_LONG
-                    ).show()
-                    launchWelcomeActivity()
-                }
+                handleUserAuthentication(user, task)
             }
+    }
 
+    private fun handleUserAuthentication(user : FirebaseUser, task : Task<Void>){
+        if (task.isSuccessful) {
+            Toast.makeText(
+                this, getString(R.string.successfulSignUp)+","+user.displayName,
+                Toast.LENGTH_LONG
+            ).show()
+            launchWelcomeActivity()
+        }
     }
 
     private fun showDataErrors(isDataValid: Map<String, Boolean>) {
@@ -107,6 +115,8 @@ class EntryActivity : AppCompatActivity() {
     }
 
     private fun showInputErrors() {
+        Toast.makeText(this, getString(R.string.errorSignUp), Toast.LENGTH_SHORT)
+            .show()
         emailTxt.text?.clear()
         passwordTxt.text?.clear()
         emailTxt.error = getString(R.string.incorrectInput)

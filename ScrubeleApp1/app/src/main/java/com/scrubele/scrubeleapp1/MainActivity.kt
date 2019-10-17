@@ -7,8 +7,11 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -51,12 +54,16 @@ class MainActivity : AppCompatActivity() {
         this.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
             this
         ) { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this, getString(R.string.successfulSignIn), Toast.LENGTH_LONG).show()
-                launchWelcomeActivity()
-            } else {
-                showInputErrors()
-            }
+            handleUserAuthentication(task)
+        }
+    }
+
+    private fun handleUserAuthentication(task : Task<AuthResult>){
+        if (task.isSuccessful) {
+            Toast.makeText(this, getString(R.string.successfulSignIn), Toast.LENGTH_LONG).show()
+            launchWelcomeActivity()
+        } else {
+            showInputErrors()
         }
     }
 

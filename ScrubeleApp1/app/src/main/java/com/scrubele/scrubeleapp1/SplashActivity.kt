@@ -7,12 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private var delayHandler: Handler? = null
     private companion object {
         const val SPLASH_DELAY: Long = 2000
     }
 
-    private val mRunnable: Runnable = Runnable {
+    private var delayHandler: Handler? = null
+
+    private val runnable: Runnable = Runnable {
         if (!isFinishing) {
             val intent = Intent(applicationContext, MainActivity::class.java)
             startActivity(intent)
@@ -24,12 +25,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
         delayHandler = Handler()
-        delayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
+        delayHandler!!.postDelayed(runnable, SPLASH_DELAY)
     }
 
     public override fun onDestroy() {
         if (delayHandler != null) {
-            delayHandler!!.removeCallbacks(mRunnable)
+            delayHandler!!.removeCallbacks(runnable)
         }
         super.onDestroy()
     }

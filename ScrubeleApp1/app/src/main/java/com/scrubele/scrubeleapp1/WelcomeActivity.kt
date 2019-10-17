@@ -24,7 +24,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun showWelcome() {
-        val welcome = "Welcome, " + user.displayName
+        val welcome = resources.getString(R.string.welcome )+ user.displayName
         welcomeTxt.text = welcome
     }
 
