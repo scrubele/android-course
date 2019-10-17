@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
 
+    private var delayHandler: Handler? = null
+
     private companion object {
         const val SPLASH_DELAY: Long = 2000
     }
-
-    private var delayHandler: Handler? = null
 
     private val runnable: Runnable = Runnable {
         if (!isFinishing) {

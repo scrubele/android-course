@@ -19,13 +19,13 @@ import kotlinx.android.synthetic.main.activity_entry.*
 
 class EntryActivity : AppCompatActivity() {
 
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+
     private companion object {
         const val PASSWORD_PATTERN = ".{8,}"
         const val PHONE_PATTERN = "^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}"
     }
-
-    private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,4 +159,3 @@ class EntryActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
-

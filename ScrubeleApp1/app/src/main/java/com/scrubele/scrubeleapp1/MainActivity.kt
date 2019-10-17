@@ -11,12 +11,12 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private var auth = FirebaseAuth.getInstance()
+
     private companion object {
         const val PASSWORD_PATTERN=".{8,}"
     }
@@ -105,5 +105,3 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 }
-
-
