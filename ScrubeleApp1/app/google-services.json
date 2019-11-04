@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "1063790989293",
+    "firebase_url": "https://scrubele.firebaseio.com",
+    "project_id": "scrubele",
+    "storage_bucket": "scrubele.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063790989293:android:0498c6cbc2bdbe2f5161e4",
+        "android_client_info": {
+          "package_name": "com.example.scrubele"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063790989293-5uf3lvdh176ev1hsktdlf10okko3k3n3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.scrubele",
+            "certificate_hash": "138c9b69cd04088a4e0555b61531213d02134a64"
+          }
+        },
+        {
+          "client_id": "1063790989293-h9vs444uc1h8mfp188pcpv7uqkaf3n4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJz0wsldyQQsUqBIUyiJJU1-e8tbhujyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063790989293-h9vs444uc1h8mfp188pcpv7uqkaf3n4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063790989293:android:d188a9a7c234fe965161e4",
+        "android_client_info": {
+          "package_name": "com.scrubele.ScrubeleApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063790989293-vcqsmjchluq42na960giru0vk4ljtv4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scrubele.ScrubeleApp",
+            "certificate_hash": "138c9b69cd04088a4e0555b61531213d02134a64"
+          }
+        },
+        {
+          "client_id": "1063790989293-h9vs444uc1h8mfp188pcpv7uqkaf3n4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJz0wsldyQQsUqBIUyiJJU1-e8tbhujyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063790989293-h9vs444uc1h8mfp188pcpv7uqkaf3n4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063790989293:android:c4ca89c9ce5827085161e4",
+        "android_client_info": {
+          "package_name": "com.scrubele.scrubeleapp1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063790989293-4q26l0te0d1mnkrgdgehqjpvogg2pmku.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scrubele.scrubeleapp1",
+            "certificate_hash": "138c9b69cd04088a4e0555b61531213d02134a64"
+          }
+        },
+        {
+          "client_id": "1063790989293-h9vs444uc1h8mfp188pcpv7uqkaf3n4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJz0wsldyQQsUqBIUyiJJU1-e8tbhujyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063790989293-h9vs444uc1h8mfp188pcpv7uqkaf3n4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
