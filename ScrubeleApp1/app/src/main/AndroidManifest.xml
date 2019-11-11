@@ -12,16 +12,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".SplashActivity">
+            android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:noHistory="true"/>
-        <activity android:name=".EntryActivity" android:allowTaskReparenting="true" android:noHistory="true" />
-        <activity android:name=".WelcomeActivity" android:allowTaskReparenting="true" android:noHistory="true" />
+        <activity android:name=".activities.MainActivity" android:noHistory="true"/>
+        <activity android:name=".activities.EntryActivity" android:allowTaskReparenting="true" android:noHistory="true" />
+        <activity android:name=".activities.WelcomeActivity" android:allowTaskReparenting="true" android:noHistory="true" />
+        <activity android:name=".activities.ListActivity" android:allowTaskReparenting="true" android:noHistory="true" />
     </application>
 
 </manifest>
