@@ -1,8 +1,14 @@
 package com.scrubele.scrubeleapp1.activities
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +28,11 @@ class ListActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var dataAdapter: DataAdapter
 
+    override fun onStart() {
+        super.onStart()
+        registerReceiver(broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -32,6 +43,12 @@ class ListActivity : AppCompatActivity() {
             swipeToRefresh()
         }
         getData()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(broadcastReceiver)
     }
 
     private fun setDataAdapter() {
@@ -81,5 +98,34 @@ class ListActivity : AppCompatActivity() {
 
         })
     }
+
+    private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val notConnected = intent.getBooleanExtra(
+                ConnectivityManager
+                    .EXTRA_NO_CONNECTIVITY, false
+            )
+            if (notConnected) {
+                networkIsDisconnected()
+            } else {
+                networkIsConnected()
+            }
+        }
+    }
+
+    private fun networkIsDisconnected() {
+        recyclerView.visibility = View.INVISIBLE
+        progressBar.visibility = View.VISIBLE
+        Toast.makeText(
+            recyclerView.context,
+            getString(R.string.network_disconnected),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun networkIsConnected() {
+        recyclerView.visibility = View.VISIBLE
+    }
+
 }
 

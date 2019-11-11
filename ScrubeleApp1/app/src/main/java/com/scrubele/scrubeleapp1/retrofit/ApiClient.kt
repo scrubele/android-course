@@ -8,22 +8,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private var BASE_URL:String="https://gothic-sequence-257518.appspot.com/api/"
+    private var BASE_URL: String = "https://gothic-sequence-257518.appspot.com/api/"
     val getClient: ApiInterface
         get() {
 
             val jsonBuilder = GsonBuilder()
-                    .setLenient()
-                    .create()
+                .setLenient()
+                .create()
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
             val retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create(jsonBuilder))
-                    .build()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(jsonBuilder))
+                .build()
 
             return retrofit.create(ApiInterface::class.java)
 
