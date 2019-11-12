@@ -2,7 +2,6 @@ package com.scrubele.scrubeleapp1.models
 
 import com.google.gson.annotations.SerializedName
 
-
 data class RobotModel(
 
     @SerializedName("url")

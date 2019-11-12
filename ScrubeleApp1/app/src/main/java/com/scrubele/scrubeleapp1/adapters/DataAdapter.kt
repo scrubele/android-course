@@ -1,5 +1,6 @@
 package com.scrubele.scrubeleapp1.adapters
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
@@ -16,9 +17,8 @@ import java.net.URL
 
 
 class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
+
     RecyclerView.Adapter<DataAdapter.ViewHolder>() {
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -41,13 +41,11 @@ class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
         DownLoadImageTask(holder.photoImageView).execute(dataModel.photo)
     }
 
-
     class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
         var nameTextView: TextView = itemLayoutView.findViewById(R.id.object_name)
         var descriptionTextView: TextView = itemLayoutView.findViewById(R.id.object_description)
         var sizeTextView: TextView = itemLayoutView.findViewById(R.id.object_size)
         var photoImageView: ImageView = itemLayoutView.findViewById(R.id.object_photo)
-
     }
 
     private class DownLoadImageTask(internal val imageView: ImageView) :
@@ -64,13 +62,10 @@ class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
         }
 
         override fun onPostExecute(result: Bitmap?) = if (result != null) {
-            Toast.makeText(imageView.context, "download success", Toast.LENGTH_SHORT).show()
+            Toast.makeText(imageView.context, Resources.getSystem().getString(R.string.successful_photo_downloading), Toast.LENGTH_SHORT).show()
             imageView.setImageBitmap(result)
         } else {
-            Toast.makeText(imageView.context, "Error downloading", Toast.LENGTH_SHORT).show()
+            Toast.makeText(imageView.context, Resources.getSystem().getString(R.string.error_photo_downloading), Toast.LENGTH_SHORT).show()
         }
     }
-
 }
-
-

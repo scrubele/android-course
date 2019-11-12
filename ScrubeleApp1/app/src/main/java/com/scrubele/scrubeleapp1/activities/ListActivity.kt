@@ -23,6 +23,7 @@ import retrofit2.Response
 
 
 class ListActivity : AppCompatActivity() {
+
     var dataList = ArrayList<ProtectedObjectModel>()
     lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -40,11 +41,10 @@ class ListActivity : AppCompatActivity() {
         setLayoutManager()
         setProgressBar()
         swipeContainer.setOnRefreshListener {
-            swipeToRefresh()
+            refreshData()
         }
         getData()
     }
-
 
     override fun onStop() {
         super.onStop()
@@ -71,10 +71,9 @@ class ListActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
     }
 
-    private fun swipeToRefresh() {
+    private fun refreshData() {
         dataList.clear()
         setProgressBar()
-        setDataAdapter()
         getData()
         swipeContainer.isRefreshing = false
     }
@@ -86,29 +85,29 @@ class ListActivity : AppCompatActivity() {
             override fun onResponse(
                 call: Call<List<ProtectedObjectModel>>?,
                 response: Response<List<ProtectedObjectModel>>?
-            ) {
-                progressBar.visibility = View.INVISIBLE
-                dataList.addAll(response!!.body()!!)
-                recyclerView.adapter?.notifyDataSetChanged()
-            }
+            ) = changeDataSet(response)
 
             override fun onFailure(call: Call<List<ProtectedObjectModel>>?, t: Throwable?) {
-                progressBar.visibility = View.INVISIBLE
+                this@ListActivity.progressBar.visibility = View.INVISIBLE
             }
-
         })
+    }
+
+    private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?){
+        progressBar.visibility = View.INVISIBLE
+        dataList.addAll(response!!.body()!!)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val notConnected = intent.getBooleanExtra(
+            val isDisconnected = intent.getBooleanExtra(
                 ConnectivityManager
                     .EXTRA_NO_CONNECTIVITY, false
             )
-            if (notConnected) {
-                networkIsDisconnected()
-            } else {
-                networkIsConnected()
+            when (isDisconnected) {
+                true -> networkIsDisconnected()
+                false -> networkIsConnected()
             }
         }
     }
@@ -126,6 +125,4 @@ class ListActivity : AppCompatActivity() {
     private fun networkIsConnected() {
         recyclerView.visibility = View.VISIBLE
     }
-
 }
-
