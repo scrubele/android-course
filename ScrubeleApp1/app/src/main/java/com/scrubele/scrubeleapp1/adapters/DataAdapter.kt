@@ -38,7 +38,7 @@ class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
         holder.nameTextView.text = dataModel.name
         holder.descriptionTextView.text = dataModel.description
         holder.sizeTextView.text = dataModel.size
-        DownLoadImageTask(holder.photoImageView).execute(dataModel.photo)
+        DownloadPhoto(holder.photoImageView).execute(dataModel.photo)
     }
 
     class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
@@ -48,12 +48,12 @@ class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
         var photoImageView: ImageView = itemLayoutView.findViewById(R.id.object_photo)
     }
 
-    private class DownLoadImageTask(internal val imageView: ImageView) :
+    private class DownloadPhoto(internal val imageView: ImageView) :
         AsyncTask<String, Void, Bitmap?>() {
         override fun doInBackground(vararg urls: String): Bitmap? {
-            val urlOfImage = urls[0]
+            val urlOfPhoto = urls[0]
             return try {
-                val inputStream = URL(urlOfImage).openStream()
+                val inputStream = URL(urlOfPhoto).openStream()
                 BitmapFactory.decodeStream(inputStream)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -62,10 +62,18 @@ class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
         }
 
         override fun onPostExecute(result: Bitmap?) = if (result != null) {
-            Toast.makeText(imageView.context, Resources.getSystem().getString(R.string.successful_photo_downloading), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                imageView.context,
+                Resources.getSystem().getString(R.string.successful_photo_downloading),
+                Toast.LENGTH_SHORT
+            ).show()
             imageView.setImageBitmap(result)
         } else {
-            Toast.makeText(imageView.context, Resources.getSystem().getString(R.string.error_photo_downloading), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                imageView.context,
+                Resources.getSystem().getString(R.string.error_photo_downloading),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

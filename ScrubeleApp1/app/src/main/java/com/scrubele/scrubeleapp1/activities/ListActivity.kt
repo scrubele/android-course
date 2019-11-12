@@ -79,7 +79,12 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val call: Call<List<ProtectedObjectModel>> = ApiClient.getClient.getProtectedObjects()
+        getProtectedObjects()
+        getRobots()
+    }
+
+    private fun getProtectedObjects(){
+        val call = ApiClient.getClient.getProtectedObjects()
         call.enqueue(object : Callback<List<ProtectedObjectModel>> {
 
             override fun onResponse(
@@ -88,12 +93,14 @@ class ListActivity : AppCompatActivity() {
             ) = changeDataSet(response)
 
             override fun onFailure(call: Call<List<ProtectedObjectModel>>?, t: Throwable?) {
-                this@ListActivity.progressBar.visibility = View.INVISIBLE
+                progressBar.visibility = View.INVISIBLE
             }
         })
     }
 
-    private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?){
+    private fun getRobots() = Unit
+
+    private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?) {
         progressBar.visibility = View.INVISIBLE
         dataList.addAll(response!!.body()!!)
         recyclerView.adapter?.notifyDataSetChanged()
