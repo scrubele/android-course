@@ -113,13 +113,13 @@ class ListActivity : AppCompatActivity() {
                     .EXTRA_NO_CONNECTIVITY, false
             )
             when (isDisconnected) {
-                true -> networkIsDisconnected()
-                false -> networkIsConnected()
+                true -> launchDisconnectedState()
+                false -> launchConnectedState()
             }
         }
     }
 
-    private fun networkIsDisconnected() {
+    private fun launchDisconnectedState() {
         recyclerView.visibility = View.INVISIBLE
         progressBar.visibility = View.VISIBLE
         Toast.makeText(
@@ -129,7 +129,7 @@ class ListActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun networkIsConnected() {
+    private fun launchConnectedState() {
         recyclerView.visibility = View.VISIBLE
     }
 }
