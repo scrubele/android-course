@@ -1,4 +1,4 @@
-# Android course labs
+# Android course project
 
 ### The first part of the app
 It includes:
