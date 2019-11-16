@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#F5F5F5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#F5F5F5"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activities.MainActivity">
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignIn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -21,20 +22,20 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="216dp"
-        app:srcCompat="@drawable/back1"
-        android:contentDescription="@string/image" />
+        android:contentDescription="@string/image"
+        app:srcCompat="@drawable/back1" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20sp"
-        android:hint="@string/email">
+        android:hint="@string/email"
+        android:paddingBottom="20sp">
 
         <EditText
             android:id="@+id/emailTxt"
-            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,23 +46,23 @@
 
         <EditText
             android:id="@+id/passwordTxt"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20sp"
-        android:hint="@string/your_name">
+        android:hint="@string/your_name"
+        android:paddingBottom="20sp">
 
         <EditText
             android:id="@+id/nameTxt"
-            android:inputType="textPersonName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,9 +73,9 @@
 
         <EditText
             android:id="@+id/phoneTxt"
-            android:inputType="phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,5 +85,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.scrubele.scrubeleapp1
+package com.scrubele.scrubeleapp1.activities
 
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.scrubele.scrubeleapp1.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var auth = FirebaseAuth.getInstance()
 
     private companion object {
-        const val PASSWORD_PATTERN=".{8,}"
+        const val PASSWORD_PATTERN = ".{8,}"
     }
 
     public override fun onStart() {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun findInvalidData(email: String, password: String):Map<String, Boolean>{
+    private fun findInvalidData(email: String, password: String): Map<String, Boolean> {
         return mapOf(
             "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
             "passwordTxt" to (password.isNotEmpty() && password.matches(PASSWORD_PATTERN.run { toRegex() }))
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleUserAuthentication(task : Task<AuthResult>){
+    private fun handleUserAuthentication(task: Task<AuthResult>) {
         if (task.isSuccessful) {
             Toast.makeText(this, getString(R.string.successfulSignIn), Toast.LENGTH_LONG).show()
             launchWelcomeActivity()
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDataErrors(isDataValid: Map<String, Boolean>) {
         val res = resources
-        for ((titleText:String) in isDataValid) {
+        for ((titleText: String) in isDataValid) {
             val field = findViewById<TextInputLayout>(
                 res.getIdentifier(titleText, "id", packageName)
             ) as EditText

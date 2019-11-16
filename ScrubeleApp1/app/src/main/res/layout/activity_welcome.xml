@@ -2,26 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/colorLight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/colorLight"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activities.MainActivity">
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/back1"
-        android:contentDescription="@string/image" />
+        android:contentDescription="@string/image"
+        app:srcCompat="@drawable/back1" />
 
     <TextView
         android:id="@+id/welcomeTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
         android:gravity="center"
-        android:textSize="30sp"
-        android:layout_marginBottom="60dp"/>
+        android:textSize="30sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignOut"
@@ -29,5 +30,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_out"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 </LinearLayout>

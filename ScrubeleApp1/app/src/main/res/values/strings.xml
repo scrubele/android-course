@@ -22,4 +22,8 @@
     <string name="phone_number">Phone number</string>
     <string name="image">image</string>
     <string name="welcome">Welcome</string>
+    <string name="list_activity_error">Fetch timeline error:</string>
+    <string name="network_disconnected">Network is disconnected</string>
+    <string name="successful_photo_downloading">download success</string>
+    <string name="error_photo_downloading">Error downloading</string>
 </resources>

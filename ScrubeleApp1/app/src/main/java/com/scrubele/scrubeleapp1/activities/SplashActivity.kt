@@ -1,9 +1,10 @@
-package com.scrubele.scrubeleapp1
+package com.scrubele.scrubeleapp1.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.scrubele.scrubeleapp1.R
 
 class SplashActivity : AppCompatActivity() {
 
@@ -25,7 +26,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
         delayHandler = Handler()
-        delayHandler!!.postDelayed(runnable, SPLASH_DELAY)
+        delayHandler!!.postDelayed(
+            runnable,
+            SPLASH_DELAY
+        )
     }
 
     public override fun onDestroy() {

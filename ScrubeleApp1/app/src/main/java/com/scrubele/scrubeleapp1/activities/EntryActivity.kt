@@ -1,4 +1,4 @@
-package com.scrubele.scrubeleapp1
+package com.scrubele.scrubeleapp1.activities
 
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.scrubele.scrubeleapp1.R
 import kotlinx.android.synthetic.main.activity_entry.*
 
 
@@ -68,7 +69,12 @@ class EntryActivity : AppCompatActivity() {
             }
     }
 
-    private fun handleUserCreating(task : Task<AuthResult>, email: String, name: String, phone: String){
+    private fun handleUserCreating(
+        task: Task<AuthResult>,
+        email: String,
+        name: String,
+        phone: String
+    ) {
         if (task.isSuccessful) {
             addUserToDB(auth.currentUser!!.uid, email, name, phone)
             authenticateUser(name)
@@ -87,10 +93,10 @@ class EntryActivity : AppCompatActivity() {
             }
     }
 
-    private fun handleUserAuthentication(user : FirebaseUser, task : Task<Void>){
+    private fun handleUserAuthentication(user: FirebaseUser, task: Task<Void>) {
         if (task.isSuccessful) {
             Toast.makeText(
-                this, getString(R.string.successfulSignUp)+","+user.displayName,
+                this, getString(R.string.successfulSignUp) + "," + user.displayName,
                 Toast.LENGTH_LONG
             ).show()
             launchWelcomeActivity()
