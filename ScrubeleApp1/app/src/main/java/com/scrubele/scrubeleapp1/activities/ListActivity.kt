@@ -29,9 +29,17 @@ class ListActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var dataAdapter: DataAdapter
 
-    override fun onStart() {
-        super.onStart()
-        registerReceiver(broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val isDisconnected = intent.getBooleanExtra(
+                ConnectivityManager
+                    .EXTRA_NO_CONNECTIVITY, false
+            )
+            when (isDisconnected) {
+                true -> launchDisconnectedState()
+                false -> launchConnectedState()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +51,12 @@ class ListActivity : AppCompatActivity() {
         swipeContainer.setOnRefreshListener {
             refreshData()
         }
-        getData()
+        loadData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerReceiver(broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onStop() {
@@ -74,16 +87,16 @@ class ListActivity : AppCompatActivity() {
     private fun refreshData() {
         dataList.clear()
         setProgressBar()
-        getData()
+        loadData()
         swipeContainer.isRefreshing = false
     }
 
-    private fun getData() {
-        getProtectedObjects()
-        getRobots()
+    private fun loadData() {
+        loadProtectedObjects()
+        loadRobots()
     }
 
-    private fun getProtectedObjects(){
+    private fun loadProtectedObjects(){
         val call = ApiClient.getClient.getProtectedObjects()
         call.enqueue(object : Callback<List<ProtectedObjectModel>> {
 
@@ -98,25 +111,12 @@ class ListActivity : AppCompatActivity() {
         })
     }
 
-    private fun getRobots() = Unit
+    private fun loadRobots() = Unit
 
     private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?) {
         progressBar.visibility = View.INVISIBLE
         dataList.addAll(response!!.body()!!)
         recyclerView.adapter?.notifyDataSetChanged()
-    }
-
-    private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val isDisconnected = intent.getBooleanExtra(
-                ConnectivityManager
-                    .EXTRA_NO_CONNECTIVITY, false
-            )
-            when (isDisconnected) {
-                true -> launchDisconnectedState()
-                false -> launchConnectedState()
-            }
-        }
     }
 
     private fun launchDisconnectedState() {

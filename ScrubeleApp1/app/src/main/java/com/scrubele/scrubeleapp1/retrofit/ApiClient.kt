@@ -1,12 +1,14 @@
 package com.scrubele.scrubeleapp1.retrofit
 
+import android.app.Application
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiClient {
+
+object ApiClient: Application(){
 
     private var BASE_URL: String = "https://gothic-sequence-257518.appspot.com/api/"
     val getClient: ApiInterface
