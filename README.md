@@ -1,1 +1,1 @@
-# Android course labs
+# Android course project
