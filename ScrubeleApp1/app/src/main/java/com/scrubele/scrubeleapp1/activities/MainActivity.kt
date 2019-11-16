@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleUserAuthentication(task: Task<AuthResult>) {
         if (task.isSuccessful) {
             Toast.makeText(this, getString(R.string.successfulSignIn), Toast.LENGTH_LONG).show()
-            launchWelcomeActivity()
+            launchListActivity()
         } else {
             showInputErrors()
         }
@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun launchWelcomeActivity() {
-        val intent = Intent(this, WelcomeActivity::class.java)
+    private fun launchListActivity() {
+        val intent = Intent(this, ListActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         finish()
