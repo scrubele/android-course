@@ -1,4 +1,4 @@
-# Android course labs
+# Android course project
 
 ### The second part of the app:
 Updates:
