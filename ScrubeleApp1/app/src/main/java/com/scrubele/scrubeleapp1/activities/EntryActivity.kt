@@ -99,7 +99,7 @@ class EntryActivity : AppCompatActivity() {
                 this, getString(R.string.successfulSignUp) + "," + user.displayName,
                 Toast.LENGTH_LONG
             ).show()
-            launchWelcomeActivity()
+            launchTabActivity()
         }
     }
 
@@ -134,7 +134,8 @@ class EntryActivity : AppCompatActivity() {
         val user = hashMapOf<String, Any>(
             "email" to email,
             "name" to name,
-            "phone" to phone
+            "phone" to phone,
+            "photoURL" to ""
         )
         db.collection("users")
             .document(uid)
@@ -145,15 +146,6 @@ class EntryActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.successfulSignUp), Toast.LENGTH_LONG).show()
     }
 
-    private fun launchWelcomeActivity() {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        intent.addFlags(
-            Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    and Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
-        )
-        startActivity(intent)
-        finish()
-    }
 
     private fun launchSignInActivity() {
         FirebaseAuth.getInstance().signOut()
@@ -163,5 +155,12 @@ class EntryActivity : AppCompatActivity() {
                     Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
         )
         startActivity(intent)
+    }
+
+    private fun launchTabActivity() {
+        val intent = Intent(this, TabActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 }
