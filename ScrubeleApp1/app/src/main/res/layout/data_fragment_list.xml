@@ -28,6 +28,4 @@
             tools:ignore="MissingConstraints" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 </LinearLayout>

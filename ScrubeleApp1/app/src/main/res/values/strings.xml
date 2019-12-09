@@ -39,4 +39,6 @@
     <string name="tab2">Tab2</string>
     <string name="profile">Profile</string>
     <string name="successfully_update_profile">Successfully updated</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="upload_picture">Uploading Picture....</string>
 </resources>

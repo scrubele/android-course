@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.scrubele.scrubeleapp1.R
 import java.util.*
 
 object FirebaseAdapter {
@@ -15,11 +16,11 @@ object FirebaseAdapter {
     var firebaseFirestore = FirebaseFirestore.getInstance()
     var storageInstance = FirebaseStorage.getInstance()
     var filePath: Uri? = null
+    private val documentReference = firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
 
     fun getPhoneNumber(onSuccessListener: (phoneNumber: String) -> Unit): String {
-        val dataRef = firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
         var phoneNumber = ""
-        dataRef.get()
+        documentReference.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     phoneNumber = document.getString("phone") as String
@@ -30,9 +31,8 @@ object FirebaseAdapter {
     }
 
     fun getPhoto(onSuccessListener: (imagePath: String) -> Unit) {
-        val dataRef = firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
         var photo: String
-        dataRef.get()
+        documentReference.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     photo = document.getString("photoURL") as String
@@ -42,9 +42,8 @@ object FirebaseAdapter {
     }
 
     fun getPhotoUrl(): String {
-        val dataRef = firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
         var photo = ""
-        dataRef.get()
+        documentReference.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     photo = document.getString("photoURL") as String
@@ -74,7 +73,7 @@ object FirebaseAdapter {
             "name" to name,
             "phone" to phone
         )
-        firebaseFirestore.collection("users").document(auth.currentUser!!.uid).update(userData)
+        documentReference.update(userData)
     }
 
     fun uploadProfilePhoto(
@@ -83,7 +82,7 @@ object FirebaseAdapter {
     ) {
         if (filePath != null) {
             val progress = ProgressDialog(activity).apply {
-                setTitle("Uploading Picture....")
+                setTitle(context.getString(R.string.upload_picture))
                 setCancelable(false)
                 setCanceledOnTouchOutside(false)
                 show()
