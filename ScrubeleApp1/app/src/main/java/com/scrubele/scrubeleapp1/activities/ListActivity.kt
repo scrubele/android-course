@@ -1,4 +1,4 @@
-package com.scrubele.scrubeleapp1.fragments
+package com.scrubele.scrubeleapp1.activities
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,25 +6,28 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.scrubele.scrubeleapp1.R
-import com.scrubele.scrubeleapp1.activities.ObjectDetailActivity
 import com.scrubele.scrubeleapp1.adapters.DataAdapter
 import com.scrubele.scrubeleapp1.models.ProtectedObjectModel
 import com.scrubele.scrubeleapp1.retrofit.ApiClient
-import kotlinx.android.synthetic.main.data_fragment_list.*
+import kotlinx.android.synthetic.main.activity_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private var dataList = ArrayList<ProtectedObjectModel>()
 
-class DataListFragment : Fragment() {
+class ListActivity : AppCompatActivity() {
+
+    var dataList = ArrayList<ProtectedObjectModel>()
+    lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var dataAdapter: DataAdapter
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -41,56 +44,59 @@ class DataListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.data_fragment_list, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        setContentView(R.layout.activity_list)
+        setDataAdapter()
+        setLayoutManager()
         setProgressBar()
-        list_recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = DataAdapter(
-                dataList
-            ) { item: ProtectedObjectModel -> partItemClicked(item) }
-        }
-        loadData()
         swipeContainer.setOnRefreshListener {
             refreshData()
         }
+        loadData()
     }
 
     override fun onStart() {
         super.onStart()
-        activity?.registerReceiver(
-            broadcastReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
+        registerReceiver(broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onStop() {
         super.onStop()
-        activity?.unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(broadcastReceiver)
     }
 
-    private fun partItemClicked(partItem: ProtectedObjectModel) {
-        Toast.makeText(this.activity, "Clicked: ${partItem.name}", Toast.LENGTH_LONG).show()
-        val showDetailActivityIntent = Intent(this.activity, ObjectDetailActivity::class.java)
-        showDetailActivityIntent.putExtra("id", partItem.id)
-        showDetailActivityIntent.putExtra("name", partItem.name)
-        showDetailActivityIntent.putExtra("description", partItem.description)
-        showDetailActivityIntent.putExtra("photo", partItem.photo)
-        showDetailActivityIntent.putExtra("size", partItem.size)
-        startActivity(showDetailActivityIntent)
+    private fun setDataAdapter() {
+        recyclerView = findViewById(R.id.recyclerView)
+        dataAdapter = DataAdapter(dataList)
+        dataAdapter.notifyDataSetChanged()
+        recyclerView.adapter = dataAdapter
+    }
+
+    private fun setLayoutManager() {
+        val layoutManager = LinearLayoutManager(recyclerView.context)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+    }
+
+    private fun setProgressBar() {
+        progressBar = findViewById(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun refreshData() {
+        dataList.clear()
+        setProgressBar()
+        loadData()
+        swipeContainer.isRefreshing = false
     }
 
     private fun loadData() {
+        loadProtectedObjects()
+        loadRobots()
+    }
+
+    private fun loadProtectedObjects(){
         val call = ApiClient.getClient.getProtectedObjects()
         call.enqueue(object : Callback<List<ProtectedObjectModel>> {
 
@@ -105,34 +111,25 @@ class DataListFragment : Fragment() {
         })
     }
 
+    private fun loadRobots() = Unit
+
     private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?) {
         progressBar.visibility = View.INVISIBLE
         dataList.addAll(response!!.body()!!)
-        list_recycler_view.adapter?.notifyDataSetChanged()
-    }
-
-    private fun setProgressBar() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun refreshData() {
-        dataList.clear()
-        setProgressBar()
-        loadData()
-        swipeContainer.isRefreshing = false
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun launchDisconnectedState() {
-        list_recycler_view.visibility = View.INVISIBLE
+        recyclerView.visibility = View.INVISIBLE
         progressBar.visibility = View.VISIBLE
         Toast.makeText(
-            list_recycler_view.context,
+            recyclerView.context,
             getString(R.string.network_disconnected),
             Toast.LENGTH_LONG
         ).show()
     }
 
     private fun launchConnectedState() {
-        list_recycler_view.visibility = View.VISIBLE
+        recyclerView.visibility = View.VISIBLE
     }
 }

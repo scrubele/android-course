@@ -11,17 +11,13 @@ import com.scrubele.scrubeleapp1.models.ProtectedObjectModel
 import com.squareup.picasso.Picasso
 
 
-class DataAdapter(
-    private var dataList: List<ProtectedObjectModel>,
-    private val itemClickListener: (ProtectedObjectModel) -> Unit
-) :
+class DataAdapter(private var dataList: List<ProtectedObjectModel>) :
 
     RecyclerView.Adapter<DataAdapter.ViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item,
+                R.layout.list_item_home,
                 parent,
                 false
             )
@@ -33,24 +29,22 @@ class DataAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataList[position], itemClickListener)
+        val dataModel = dataList[position]
+        holder.nameTextView.text = dataModel.name
+        holder.descriptionTextView.text = dataModel.description
+        holder.sizeTextView.text = dataModel.size
+//        DownloadPhoto(holder.photoImageView).execute(dataModel.photo)
+        Picasso
+            .get()
+            .load(dataModel.photo)
+            .into(holder.photoImageView)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var nameTextView: TextView = itemView.findViewById(R.id.object_name)
-        private var descriptionTextView: TextView = itemView.findViewById(R.id.object_description)
-        private var sizeTextView: TextView = itemView.findViewById(R.id.object_size)
-        private var photoImageView: ImageView = itemView.findViewById(R.id.object_photo)
-
-        fun bind(dataModel: ProtectedObjectModel, clickListener: (ProtectedObjectModel) -> Unit) {
-            nameTextView.text = dataModel.name
-            descriptionTextView.text = dataModel.description
-            sizeTextView.text = dataModel.size
-            Picasso
-                .get()
-                .load(dataModel.photo)
-                .into(photoImageView)
-            itemView.setOnClickListener { clickListener(dataModel) }
-        }
+    class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
+        var nameTextView: TextView = itemLayoutView.findViewById(R.id.object_name)
+        var descriptionTextView: TextView = itemLayoutView.findViewById(R.id.object_description)
+        var sizeTextView: TextView = itemLayoutView.findViewById(R.id.object_size)
+        var photoImageView: ImageView = itemLayoutView.findViewById(R.id.object_photo)
     }
+
 }

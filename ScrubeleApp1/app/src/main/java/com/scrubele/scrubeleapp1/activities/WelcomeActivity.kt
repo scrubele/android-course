@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.scrubele.scrubeleapp1.R
-//import com.scrubele.scrubeleapp1.fragments.ListActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 
 class WelcomeActivity : AppCompatActivity() {
@@ -20,7 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
         showWelcome()
-        launchSignInActivity()
+        launchListActivity()
         btnSignOut.setOnClickListener { launchSignInActivity() }
     }
 
@@ -39,4 +38,10 @@ class WelcomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun launchListActivity() {
+        val intent = Intent(this, ListActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
+    }
 }
