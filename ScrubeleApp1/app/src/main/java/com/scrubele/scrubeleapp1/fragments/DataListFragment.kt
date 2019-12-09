@@ -79,10 +79,6 @@ class DataListFragment : Fragment() {
         activity?.unregisterReceiver(broadcastReceiver)
     }
 
-    companion object {
-        fun newInstance(): MainFragment = MainFragment()
-    }
-
     private fun partItemClicked(partItem: ProtectedObjectModel) {
         Toast.makeText(this.activity, "Clicked: ${partItem.name}", Toast.LENGTH_LONG).show()
         val showDetailActivityIntent = Intent(this.activity, ObjectDetailActivity::class.java)

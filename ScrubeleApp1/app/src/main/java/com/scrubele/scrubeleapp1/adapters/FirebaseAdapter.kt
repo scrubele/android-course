@@ -15,7 +15,6 @@ object FirebaseAdapter {
     var user = auth.currentUser!!
     var firebaseFirestore = FirebaseFirestore.getInstance()
     var storageInstance = FirebaseStorage.getInstance()
-    var filePath: Uri? = null
     private val documentReference = firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
 
     fun getPhoneNumber(onSuccessListener: (phoneNumber: String) -> Unit): String {
@@ -78,6 +77,7 @@ object FirebaseAdapter {
 
     fun uploadProfilePhoto(
         activity: FragmentActivity?,
+        filePath:Uri?,
         onSuccessListener: (imagePath: String) -> Unit
     ) {
         if (filePath != null) {

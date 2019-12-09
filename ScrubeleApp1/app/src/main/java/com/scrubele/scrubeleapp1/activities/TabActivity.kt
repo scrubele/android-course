@@ -2,7 +2,6 @@ package com.scrubele.scrubeleapp1.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -24,19 +23,10 @@ class TabActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tabs)
         initViews()
         setStatePageAdapter()
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        initSupportActionBar()
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager.currentItem = tab.position
-                val fm = supportFragmentManager
-                val ft = fm.beginTransaction()
-                val count = fm.backStackEntryCount
-                if (count >= 1) {
-                    supportFragmentManager.popBackStack()
-                }
-                ft.commit()
+                setTabLayout(tab)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -45,10 +35,6 @@ class TabActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {
             }
         })
-        toolbar.setNavigationOnClickListener {
-            startActivity(Intent(applicationContext, MainActivity::class.java))
-            finish()
-        }
     }
 
     private fun initViews() {
@@ -63,5 +49,32 @@ class TabActivity : AppCompatActivity() {
         fragmentAdapter.addFragment(ProfileFragment(), getString(R.string.profile))
         viewpager_main.adapter = fragmentAdapter
         tabs_main.setupWithViewPager(viewpager_main)
+    }
+
+    private fun initSupportActionBar(){
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            launchMainActivity()
+        }
+    }
+
+    private fun setTabLayout(tab: TabLayout.Tab){
+        viewPager.currentItem = tab.position
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        val count = fm.backStackEntryCount
+        if (count >= 1) {
+            supportFragmentManager.popBackStack()
+        }
+        ft.commit()
+    }
+
+    private fun launchMainActivity() {
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 }

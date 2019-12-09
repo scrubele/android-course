@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.scrubele.scrubeleapp1.R
+import com.scrubele.scrubeleapp1.Utils.ErrorChecker
 import com.scrubele.scrubeleapp1.activities.ChangePasswordActivity
 import com.scrubele.scrubeleapp1.activities.MainActivity
 import com.scrubele.scrubeleapp1.adapters.FirebaseAdapter
@@ -36,9 +37,6 @@ class ProfileFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 71
     private var filePath: Uri? = null
 
-    private companion object {
-        const val PHONE_PATTERN = "^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,21 +90,9 @@ class ProfileFragment : Fragment() {
         val email = profile_email.text.toString()
         val name = profile_name.text.toString()
         val phone = profile_phone.text.toString()
-        val invalidData = findInvalidData(email, name, phone)
+        val invalidData = ErrorChecker.findInvalidData(email, name, phone)
         showDataErrors(invalidData)
         return invalidData.isEmpty()
-    }
-
-    private fun findInvalidData(
-        email: String,
-        name: String,
-        phone: String
-    ): Map<String, Boolean> {
-        return mapOf(
-            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
-            "phoneTxt" to (phone.isNotEmpty() && phone.matches(PHONE_PATTERN.run { toRegex() })),
-            "nameTxt" to (name.isNotEmpty())
-        ).filter { !it.value }
     }
 
     private fun showDataErrors(isDataValid: Map<String, Boolean>) {
@@ -134,7 +120,7 @@ class ProfileFragment : Fragment() {
             FirebaseAdapter.run {
                 updateEmail(activity, email)
                 updateFirestoreData(email, name, phone)
-                uploadProfilePhoto(activity) { imagePath ->
+                uploadProfilePhoto(activity,filePath) { imagePath ->
                     addPhotoURL(imagePath)
                 }
                 updateProfile(name)
