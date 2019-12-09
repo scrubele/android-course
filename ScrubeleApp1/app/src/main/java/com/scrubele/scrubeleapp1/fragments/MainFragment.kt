@@ -61,8 +61,6 @@ class MainFragment : Fragment() {
                 dataList
             ) { item: ProtectedObjectModel -> partItemClicked(item) }
         }
-
-
         loadData()
         swipeContainer.setOnRefreshListener {
             refreshData()
@@ -88,14 +86,12 @@ class MainFragment : Fragment() {
 
     private fun partItemClicked(partItem: ProtectedObjectModel) {
         Toast.makeText(this.activity, "Clicked: ${partItem.name}", Toast.LENGTH_LONG).show()
-
         val showDetailActivityIntent = Intent(this.activity, ObjectDetailActivity::class.java)
         showDetailActivityIntent.putExtra("id", partItem.id)
         showDetailActivityIntent.putExtra("name", partItem.name)
         showDetailActivityIntent.putExtra("description", partItem.description)
         showDetailActivityIntent.putExtra("photo", partItem.photo)
         showDetailActivityIntent.putExtra("size", partItem.size)
-
         startActivity(showDetailActivityIntent)
     }
 
@@ -113,7 +109,6 @@ class MainFragment : Fragment() {
             }
         })
     }
-
 
     private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?) {
         progressBar.visibility = View.INVISIBLE
