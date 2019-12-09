@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.scrubele.scrubeleapp1.R
+import com.scrubele.scrubeleapp1.Utils.ErrorChecker
 import kotlinx.android.synthetic.main.activity_entry.*
 
 
@@ -22,11 +23,6 @@ class EntryActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
-
-    private companion object {
-        const val PASSWORD_PATTERN = ".{8,}"
-        const val PHONE_PATTERN = "^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,26 +36,12 @@ class EntryActivity : AppCompatActivity() {
         val password = passwordTxt.text.toString()
         val name = nameTxt.text.toString()
         val phone = phoneTxt.text.toString()
-        val invalidData = findInvalidData(email, password, name, phone)
+        val invalidData = ErrorChecker.findInvalidData(email, password, name, phone)
         if (invalidData.isEmpty()) {
             createUser(email, password, name, phone)
         } else {
             showDataErrors(invalidData)
         }
-    }
-
-    private fun findInvalidData(
-        email: String,
-        password: String,
-        name: String,
-        phone: String
-    ): Map<String, Boolean> {
-        return mapOf(
-            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
-            "passwordTxt" to (password.isNotEmpty() && password.matches(PASSWORD_PATTERN.run { toRegex() })),
-            "phoneTxt" to (phone.isNotEmpty() && phone.matches(PHONE_PATTERN.run { toRegex() })),
-            "nameTxt" to (name.isNotEmpty())
-        ).filter { !it.value }
     }
 
     private fun createUser(email: String, password: String, name: String, phone: String) {
@@ -99,7 +81,7 @@ class EntryActivity : AppCompatActivity() {
                 this, getString(R.string.successfulSignUp) + "," + user.displayName,
                 Toast.LENGTH_LONG
             ).show()
-            launchWelcomeActivity()
+            launchTabActivity()
         }
     }
 
@@ -134,7 +116,8 @@ class EntryActivity : AppCompatActivity() {
         val user = hashMapOf<String, Any>(
             "email" to email,
             "name" to name,
-            "phone" to phone
+            "phone" to phone,
+            "photoURL" to ""
         )
         db.collection("users")
             .document(uid)
@@ -145,15 +128,6 @@ class EntryActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.successfulSignUp), Toast.LENGTH_LONG).show()
     }
 
-    private fun launchWelcomeActivity() {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        intent.addFlags(
-            Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    and Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
-        )
-        startActivity(intent)
-        finish()
-    }
 
     private fun launchSignInActivity() {
         FirebaseAuth.getInstance().signOut()
@@ -163,5 +137,12 @@ class EntryActivity : AppCompatActivity() {
                     Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP
         )
         startActivity(intent)
+    }
+
+    private fun launchTabActivity() {
+        val intent = Intent(this, TabActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 }
