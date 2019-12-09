@@ -44,7 +44,6 @@ class EntryActivity : AppCompatActivity() {
         }
     }
 
-
     private fun createUser(email: String, password: String, name: String, phone: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
