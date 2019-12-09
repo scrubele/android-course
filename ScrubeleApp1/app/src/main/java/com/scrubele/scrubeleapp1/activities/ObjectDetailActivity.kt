@@ -13,11 +13,11 @@ class ObjectDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_item_detailed)
-        val intentThatStartedThisActivity = intent
-        if (intentThatStartedThisActivity.hasExtra("name")) {
-            intent.getStringExtra("id")
-            setObject()
-        }
+        setToolbar()
+        setObject()
+    }
+
+    private fun setToolbar(){
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -26,15 +26,16 @@ class ObjectDetailActivity : AppCompatActivity() {
             finish()
         }
     }
-
     private fun setObject() {
-        detailed_object_name.text = intent.getStringExtra("name")
-        detailed_object_description.text = intent.getStringExtra("description")
-        detailed_object_size.text = intent.getStringExtra("size")
-        val photo = intent.getStringExtra("photo")
-        Picasso
-            .get()
-            .load(photo)
-            .into(detailed_object_photo)
+        if (intent.hasExtra("name")) {
+            detailed_object_name.text = intent.getStringExtra("name")
+            detailed_object_description.text = intent.getStringExtra("description")
+            detailed_object_size.text = intent.getStringExtra("size")
+            val photo = intent.getStringExtra("photo")
+            Picasso
+                .get()
+                .load(photo)
+                .into(detailed_object_photo)
+        }
     }
 }
