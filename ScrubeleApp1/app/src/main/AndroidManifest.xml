@@ -27,9 +27,7 @@
         <activity android:name=".activities.MainActivity" android:noHistory="true"/>
         <activity android:name=".activities.EntryActivity" android:allowTaskReparenting="true" android:noHistory="true" />
         <activity android:name=".activities.WelcomeActivity" android:allowTaskReparenting="true" android:noHistory="true" />
-<!--        <activity android:name=".fragments.ListActivity" android:allowTaskReparenting="true" android:noHistory="true" />-->
         <activity android:name=".activities.TabActivity" android:allowTaskReparenting="true"/>
         <activity android:name=".activities.ObjectDetailActivity" android:allowTaskReparenting="true" android:noHistory="true" />
-
     </application>
 </manifest>

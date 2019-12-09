@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.scrubele.scrubeleapp1.R
+import com.scrubele.scrubeleapp1.Utils.ErrorChecker
 import kotlinx.android.synthetic.main.activity_entry.*
 
 
@@ -22,11 +23,6 @@ class EntryActivity : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
-
-    private companion object {
-        const val PASSWORD_PATTERN = ".{8,}"
-        const val PHONE_PATTERN = "^[+]?[(]?[0-9]{1,4}[)]?[0-9]{9}"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +36,7 @@ class EntryActivity : AppCompatActivity() {
         val password = passwordTxt.text.toString()
         val name = nameTxt.text.toString()
         val phone = phoneTxt.text.toString()
-        val invalidData = findInvalidData(email, password, name, phone)
+        val invalidData = ErrorChecker.findInvalidData(email, password, name, phone)
         if (invalidData.isEmpty()) {
             createUser(email, password, name, phone)
         } else {
@@ -48,19 +44,6 @@ class EntryActivity : AppCompatActivity() {
         }
     }
 
-    private fun findInvalidData(
-        email: String,
-        password: String,
-        name: String,
-        phone: String
-    ): Map<String, Boolean> {
-        return mapOf(
-            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
-            "passwordTxt" to (password.isNotEmpty() && password.matches(PASSWORD_PATTERN.run { toRegex() })),
-            "phoneTxt" to (phone.isNotEmpty() && phone.matches(PHONE_PATTERN.run { toRegex() })),
-            "nameTxt" to (name.isNotEmpty())
-        ).filter { !it.value }
-    }
 
     private fun createUser(email: String, password: String, name: String, phone: String) {
         auth.createUserWithEmailAndPassword(email, password)

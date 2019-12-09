@@ -12,15 +12,12 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.scrubele.scrubeleapp1.R
+import com.scrubele.scrubeleapp1.Utils.ErrorChecker
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private var auth = FirebaseAuth.getInstance()
-
-    private companion object {
-        const val PASSWORD_PATTERN = ".{8,}"
-    }
 
     public override fun onStart() {
         super.onStart()
@@ -36,19 +33,12 @@ class MainActivity : AppCompatActivity() {
     private fun signInUser() {
         val email = emailTxt.text.toString()
         val password = passwordTxt.text.toString()
-        val invalidData = findInvalidData(email, password)
+        val invalidData = ErrorChecker.findInvalidData(email = email, password = password)
         if (invalidData.isEmpty()) {
             authenticateUser(email, password)
         } else {
             showDataErrors(invalidData)
         }
-    }
-
-    private fun findInvalidData(email: String, password: String): Map<String, Boolean> {
-        return mapOf(
-            "emailTxt" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
-            "passwordTxt" to (password.isNotEmpty() && password.matches(PASSWORD_PATTERN.run { toRegex() }))
-        ).filter { !it.value }
     }
 
     private fun authenticateUser(email: String, password: String) {

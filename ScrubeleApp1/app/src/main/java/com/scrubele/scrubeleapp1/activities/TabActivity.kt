@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.app_bar.*
 
 class TabActivity : AppCompatActivity() {
 
-    lateinit var viewPager: ViewPager
+    private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
