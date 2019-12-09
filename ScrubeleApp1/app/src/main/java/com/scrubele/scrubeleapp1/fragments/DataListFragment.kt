@@ -51,7 +51,6 @@ class DataListFragment : Fragment() {
     ): View? =
         inflater.inflate(R.layout.data_fragment_list, container, false)
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setProgressBar()
@@ -61,8 +60,6 @@ class DataListFragment : Fragment() {
                 dataList
             ) { item: ProtectedObjectModel -> partItemClicked(item) }
         }
-
-
         loadData()
         swipeContainer.setOnRefreshListener {
             refreshData()
@@ -111,7 +108,6 @@ class DataListFragment : Fragment() {
             }
         })
     }
-
 
     private fun changeDataSet(response: Response<List<ProtectedObjectModel>>?) {
         progressBar.visibility = View.INVISIBLE

@@ -50,10 +50,7 @@ class DataAdapter(
                 .get()
                 .load(dataModel.photo)
                 .into(photoImageView)
-
             itemView.setOnClickListener { clickListener(dataModel) }
         }
     }
-
-
 }

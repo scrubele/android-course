@@ -27,5 +27,4 @@ class TabsAdapter(fm: FragmentManager) :
         fragmentList.add(fragment)
         fragmentTitleList.add(title)
     }
-
 }

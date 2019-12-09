@@ -15,13 +15,9 @@ import kotlinx.android.synthetic.main.activity_tabs.*
 import kotlinx.android.synthetic.main.app_bar.*
 
 class TabActivity : AppCompatActivity() {
-    private val layoutResId: Int
-        @LayoutRes
-        get() = R.layout.activity_list
 
     lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +27,6 @@ class TabActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager.currentItem = tab.position
@@ -50,7 +45,6 @@ class TabActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {
             }
         })
-
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(applicationContext, MainActivity::class.java))
             finish()
