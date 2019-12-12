@@ -122,9 +122,8 @@ class AddObjectActivity : AppCompatActivity() {
                 launchTabActivity()
             }
 
-        })к
+        })
         setProgressBar()
-
     }
 
     private fun setProgressBar() = when {
