@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scrubele.scrubeleapp1.R
+import com.scrubele.scrubeleapp1.activities.AddObjectActivity
 import com.scrubele.scrubeleapp1.activities.ObjectDetailActivity
 import com.scrubele.scrubeleapp1.adapters.DataAdapter
 import com.scrubele.scrubeleapp1.models.ProtectedObjectModel
@@ -60,6 +61,10 @@ class DataListFragment : Fragment() {
                 dataList
             ) { item: ProtectedObjectModel -> partItemClicked(item) }
         }
+        fab.setOnClickListener {
+            val intent = Intent(activity, AddObjectActivity::class.java)
+            activity!!.startActivity(intent)
+        }
         loadData()
         swipeContainer.setOnRefreshListener {
             refreshData()
@@ -72,6 +77,7 @@ class DataListFragment : Fragment() {
             broadcastReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
+
     }
 
     override fun onStop() {

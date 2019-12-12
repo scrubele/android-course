@@ -85,11 +85,23 @@ class ProfileFragment : Fragment() {
         firebaseFirestore?.collection("users")?.document(auth.currentUser!!.uid)?.update(userData)
     }
 
+    fun findInvalidData(
+        email: String = "abc@gmail.com",
+        name: String = "a",
+        phone: String = "1234567890"
+    ): Map<String, Boolean> {
+        return mapOf(
+            "profile_photo" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
+            "profile_phone" to (phone.isNotEmpty() && phone.matches(ErrorChecker.PHONE_PATTERN.run { toRegex() })),
+            "profile_name" to (name.isNotEmpty())
+        ).filter { !it.value }
+    }
+
     private fun isDataValid(): Boolean {
         val email = profile_email.text.toString()
         val name = profile_name.text.toString()
         val phone = profile_phone.text.toString()
-        val invalidData = ErrorChecker.findInvalidData(email, name, phone)
+        val invalidData = findInvalidData(email, name, phone)
         showDataErrors(invalidData)
         return invalidData.isEmpty()
     }
@@ -119,7 +131,7 @@ class ProfileFragment : Fragment() {
             FirebaseAdapter.run {
                 updateEmail(activity, email)
                 updateFirestoreData(email, name, phone)
-                uploadProfilePhoto(activity,filePath) { imagePath ->
+                uploadProfilePhoto(activity, filePath) { imagePath ->
                     addPhotoURL(imagePath)
                 }
                 updateProfile(name)
@@ -136,7 +148,10 @@ class ProfileFragment : Fragment() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGE_REQUEST)
+        startActivityForResult(
+            Intent.createChooser(intent, getString(R.string.select_picture)),
+            PICK_IMAGE_REQUEST
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
