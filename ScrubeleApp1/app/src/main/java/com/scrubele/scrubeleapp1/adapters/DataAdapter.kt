@@ -32,6 +32,10 @@ class DataAdapter(
         return dataList.size
     }
 
+    fun getObject(id: Int): ProtectedObjectModel?{
+        return dataList.find { it.id == id }
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataList[position], itemClickListener)
     }
