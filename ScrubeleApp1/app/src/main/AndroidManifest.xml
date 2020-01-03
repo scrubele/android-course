@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_foreground" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
         <activity
             android:name=".activities.SplashActivity">
             <intent-filter>
@@ -27,7 +37,13 @@
         <activity android:name=".activities.MainActivity" android:noHistory="true"/>
         <activity android:name=".activities.EntryActivity" android:allowTaskReparenting="true" android:noHistory="true" />
         <activity android:name=".activities.WelcomeActivity" android:allowTaskReparenting="true" android:noHistory="true" />
-        <activity android:name=".activities.TabActivity" android:allowTaskReparenting="true"/>
+        <activity android:name=".activities.TabActivity" android:allowTaskReparenting="true" android:noHistory="true" />
         <activity android:name=".activities.ObjectDetailActivity" android:allowTaskReparenting="true" android:noHistory="true" />
+        <activity android:name=".activities.AddObjectActivity" android:allowTaskReparenting="true"/>
+        <service android:name=".services.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>

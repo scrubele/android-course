@@ -15,7 +15,8 @@ object FirebaseAdapter {
     var user = auth.currentUser!!
     var firebaseFirestore = FirebaseFirestore.getInstance()
     var storageInstance = FirebaseStorage.getInstance()
-    private val documentReference = firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
+    private val documentReference =
+        firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
 
     fun getPhoneNumber(onSuccessListener: (phoneNumber: String) -> Unit): String {
         var phoneNumber = ""
@@ -77,7 +78,7 @@ object FirebaseAdapter {
 
     fun uploadProfilePhoto(
         activity: FragmentActivity?,
-        filePath:Uri?,
+        filePath: Uri?,
         onSuccessListener: (imagePath: String) -> Unit
     ) {
         if (filePath != null) {
@@ -90,7 +91,7 @@ object FirebaseAdapter {
             var value: Double
             val fileName = "profilePictures/" + UUID.randomUUID().toString()
             val ref = storageInstance.reference.child(fileName)
-            ref.putFile(filePath!!)
+            ref.putFile(filePath)
                 .addOnProgressListener { taskSnapshot ->
                     value = (100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount
                     progress.setMessage("Uploaded.. " + value.toInt() + "%")

@@ -51,7 +51,7 @@ class TabActivity : AppCompatActivity() {
         tabs_main.setupWithViewPager(viewpager_main)
     }
 
-    private fun initSupportActionBar(){
+    private fun initSupportActionBar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -60,7 +60,7 @@ class TabActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTabLayout(tab: TabLayout.Tab){
+    private fun setTabLayout(tab: TabLayout.Tab) {
         viewPager.currentItem = tab.position
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()

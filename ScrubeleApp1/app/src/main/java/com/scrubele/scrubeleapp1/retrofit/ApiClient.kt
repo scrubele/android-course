@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient : Application() {
 
     //    private var BASE_URL: String = "https://wired-sol-231410.appspot.com/api/"
-    private var BASE_URL: String = "http://34.67.79.18:8000/api/"
+    private var BASE_URL: String = "http://104.154.190.119:8000/api/"
     val getClient: ApiInterface
         get() {
             val jsonBuilder = GsonBuilder()
@@ -27,4 +27,5 @@ object ApiClient : Application() {
                 .build()
             return retrofit.create(ApiInterface::class.java)
         }
+
 }
