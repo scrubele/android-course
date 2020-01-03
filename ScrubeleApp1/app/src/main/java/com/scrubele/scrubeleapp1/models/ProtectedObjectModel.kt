@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ProtectedObjectModel(
 
+
     @SerializedName("id")
     var id: Int,
     @SerializedName("name")
