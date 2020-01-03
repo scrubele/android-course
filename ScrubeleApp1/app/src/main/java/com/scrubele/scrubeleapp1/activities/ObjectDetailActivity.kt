@@ -17,7 +17,7 @@ class ObjectDetailActivity : AppCompatActivity() {
         setObject()
     }
 
-    private fun setToolbar() {
+    private fun setToolbar(){
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -26,7 +26,6 @@ class ObjectDetailActivity : AppCompatActivity() {
             finish()
         }
     }
-
     private fun setObject() {
         if (intent.hasExtra("name")) {
             detailed_object_name.text = intent.getStringExtra("name")
