@@ -1,8 +1,9 @@
 # Android course project
 An Android REST API app connected to Firebase and Django backend.
-Structure:
-* [milestone1](https://github.com/scrubele/android-course/tree/milestone1)
-* [milestone2](https://github.com/scrubele/android-course/tree/milestone2)
-* [milestone3](https://github.com/scrubele/android-course/tree/milestone3)
-* [milestone4](https://github.com/scrubele/android-course/tree/milestone4)
-* [milestone5](https://github.com/scrubele/android-course/tree/milestone5)
+
+Updates in milestones:
+* [Firebase authentification](https://github.com/scrubele/android-course/tree/milestone1)
+* [Data loading](https://github.com/scrubele/android-course/tree/milestone2)
+* [Tabs/Fragments](https://github.com/scrubele/android-course/tree/milestone3)
+* [CRUD requests, Image loading](https://github.com/scrubele/android-course/tree/milestone4)
+* [Firebase notifications](https://github.com/scrubele/android-course/tree/milestone5)
