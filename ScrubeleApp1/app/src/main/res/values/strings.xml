@@ -26,4 +26,19 @@
     <string name="network_disconnected">Network is disconnected</string>
     <string name="successful_photo_downloading">download success</string>
     <string name="error_photo_downloading">Error downloading</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_phone">Phone</string>
+    <string name="email_is_updated">Email is updated</string>
+    <string name="update_profile">Update profile</string>
+    <string name="update_password">Update password</string>
+    <string name="change_password">Change password</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="photo_is_uploaded">Photo is uploaded</string>
+    <string name="list">List</string>
+    <string name="tab2">Tab2</string>
+    <string name="profile">Profile</string>
+    <string name="successfully_update_profile">Successfully updated</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="upload_picture">Uploading Picture....</string>
 </resources>
